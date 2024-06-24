@@ -3,6 +3,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #if defined(__WIN32)
 #define SysClr "cls"
@@ -146,22 +147,35 @@ void print_save(FILE *file, int grid[row][col]) {
     }
 }
 
-int save_file(int grid[row][col]) {
+int save_file(int grid[][100]) {
+    char path[90] = "../saves/";
     char file_name[20];
-    printf("Type Save-Name...\n");
-    scanf("%s", file_name);
 
-    FILE *file = fopen(file_name, "w");
+    // Ensure the saves directory exists
+    struct stat st = {0};
+    if (stat("../saves", &st) == -1) {
+        if (mkdir("../saves", 0700) != 0) {
+            perror("Unable to create directory");
+            return 1;
+        }
+    }
+
+    printf("Type Save-Name...\n");
+    scanf("%19s", file_name); // Limit input to avoid buffer overflow
+
+    strcat(path, file_name); // Concatenate the directory path and the file name
+
+    FILE *file = fopen(path, "w");
     if (file == NULL) {
         perror("Unable to open file");
         return 1;
     }
 
-    print_save(file, grid);
+    print_save(file, grid); // Pass grid and its dimensions
 
     fclose(file);
 
-    printf("Grid saved successfully\n");
+    printf("Grid saved successfully to %s\n", path);
     return 0;
 }
 
@@ -177,14 +191,14 @@ int read_file(int grid[row][col]) {
 
     FILE *file = fopen(path, "r");
     if (file == NULL) {
-        printf("Fehler beim Öffnen der Datei.\n");
+        printf("Error reading the file.\n");
         return 1;
     }
 
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
             if (fscanf(file, "%1d", &save_grid[i][j]) != 1) {
-                printf("Fehler beim Lesen der Datei.\n");
+                printf("Error reading the file.\n");
                 fclose(file);
                 return 1;
             }
@@ -209,7 +223,7 @@ int main() {
     int neighbor_counts[row][col];
 
     int choice;
-    printf("Choose to read file or use random grid(0/1):");
+    printf("Choose to read file or use random grid(0/1):\n");
     fflush(stdin);
     scanf("%d", &choice);
     if(choice == 0){
@@ -226,7 +240,14 @@ int main() {
         usleep(refreshTime*100000);
         system(SysClr);
     }
-    save_file(grid);
-    sleep(100);
+
+    printf("Choose to save file or exit(0/1):\n");
+    fflush(stdin);
+    scanf("%d", &choice);
+    if(choice == 0){
+        save_file(grid);
+    }else{
+        exit(1);
+    }
     return 0;
 }
