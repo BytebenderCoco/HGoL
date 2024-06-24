@@ -19,6 +19,8 @@ To compile the program, use the following command:
 
 gcc -o HGoL.c
 
+## Usage
+
 Run the compiled programm:
 
 ./HGoL
