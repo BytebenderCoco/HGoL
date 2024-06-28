@@ -52,7 +52,7 @@ Run the compiled programm:
 
 **File Structure**
 
-• HGoL.c**: Main program file containing all functions and logic
+• **HGoL.c**: Main program file containing all functions and logic
 
 • **saves/**: Directory for saving and loading grid states
 
