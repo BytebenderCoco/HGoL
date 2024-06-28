@@ -32,23 +32,23 @@ Run the compiled programm:
 
 1. **Parameter Adjustment**:
 
-• Enter the number of rows (5-50)
+  • Enter the number of rows (5-50)
 
-• Enter the number of columns (5-50)
+  • Enter the number of columns (5-50)
 
-• Enter the refresh time (in seconds)
+  • Enter the refresh time (in seconds)
 
-• Enter the number of generations
+  • Enter the number of generations
 
 2. **Grid Initialization**:
 
-• Choose to read a grid from a file or initialize a random grid (0 for file, 1 for random)
+  • Choose to read a grid from a file or initialize a random grid (0 for file, 1 for random)
 3. **Simulation**:
 
-• The grid is displayed and updated for the specified number of generations with the specified refresh time.
+  • The grid is displayed and updated for the specified number of generations with the specified refresh time.
 4. **Save or Exit**:
 
-• Choose to save the final grid state to a file or exit the program (0 to save, 1 to exit)
+  • Choose to save the final grid state to a file or exit the program (0 to save, 1 to exit)
 
 **File Structure**
 
