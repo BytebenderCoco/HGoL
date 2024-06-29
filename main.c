@@ -151,15 +151,6 @@ int save_file(int grid[][100]) {
     char path[90] = "../saves/";
     char file_name[20];
 
-    // Ensure the saves directory exists
-    struct stat st = {0};
-    if (stat("../saves", &st) == -1) {
-        if (mkdir("../saves", 0700) != 0) {
-            perror("Unable to create directory");
-            return 1;
-        }
-    }
-
     printf("Type Save-Name...\n");
     scanf("%19s", file_name); // Limit input to avoid buffer overflow
 
