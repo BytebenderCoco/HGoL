@@ -3,6 +3,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #if defined(__WIN32)
 #define SysClr "cls"
@@ -16,7 +17,7 @@ int refreshTime = 0;
 int generations = 0;
 
 
-void initializeRandomGrid(int grid[row][col]){
+void initalizeRandomGrid(int grid[row][col]){
     srand(time(NULL));
     for(int i = 0; i < row; i++){
         for(int j = 0; j < col; j++){
@@ -127,7 +128,7 @@ void parameterAdjustment(){
     fflush(stdin);
     scanf("%d", &col);
     system(SysClr);
-    printf("Enter refresh time:");
+    printf("Enter refreshtime:");
     fflush(stdin);
     scanf("%d", &refreshTime);
     system(SysClr);
@@ -149,6 +150,15 @@ void print_save(FILE *file, int grid[row][col]) {
 int save_file(int grid[][100]) {
     char path[90] = "../saves/";
     char file_name[20];
+
+    // Ensure the saves directory exists
+    struct stat st = {0};
+    if (stat("../saves", &st) == -1) {
+        if (mkdir("../saves", 0700) != 0) {
+            perror("Unable to create directory");
+            return 1;
+        }
+    }
 
     printf("Type Save-Name...\n");
     scanf("%19s", file_name); // Limit input to avoid buffer overflow
@@ -219,7 +229,7 @@ int main() {
     if(choice == 0){
         read_file(grid);
     }else if(choice == 1){
-        initializeRandomGrid(grid);
+        initalizeRandomGrid(grid);
     }else{
         exit(1);
     }
