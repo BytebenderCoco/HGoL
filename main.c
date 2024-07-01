@@ -163,7 +163,7 @@ int save_file(int grid[][100]) {
 
     fclose(file);
 
-    printf("Grid saved successfully to %s\n", file);
+    printf("Grid saved successfully to %s\n", file_name);
     return 0;
 }
 
