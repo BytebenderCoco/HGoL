@@ -148,15 +148,12 @@ void print_save(FILE *file, int grid[row][col]) {
 }
 
 int save_file(int grid[][100]) {
-    char path[90] = "../saves/";
     char file_name[20];
 
     printf("Type Save-Name...\n");
     scanf("%19s", file_name); // Limit input to avoid buffer overflow
 
-    strcat(path, file_name); // Concatenate the directory path and the file name
-
-    FILE *file = fopen(path, "w");
+    FILE *file = fopen(file_name, "w");
     if (file == NULL) {
         perror("Unable to open file");
         return 1;
@@ -166,21 +163,18 @@ int save_file(int grid[][100]) {
 
     fclose(file);
 
-    printf("Grid saved successfully to %s\n", path);
+    printf("Grid saved successfully to %s\n", file);
     return 0;
 }
 
 int read_file(int grid[row][col]) {
     char filename[20];
-    char path[70] = "../saves/";  // Adjusted the path size for safety
     int save_grid[row][col];
 
     printf("What save, would you like to upload?\n");
     scanf("%19s", filename);  // Read input into filename
 
-    strcat(path, filename);  // Concatenate "saves/" and filename
-
-    FILE *file = fopen(path, "r");
+    FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Error reading the file.\n");
         return 1;
