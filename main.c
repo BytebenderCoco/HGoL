@@ -148,6 +148,7 @@ void print_save(FILE *file, int grid[row][col]) {
 }
 
 int save_file(int grid[][100]) {
+    //function to save gamestate into file
     char file_name[20];
 
     printf("Type Save-Name...\n");
@@ -164,6 +165,7 @@ int save_file(int grid[][100]) {
     fclose(file);
 
     printf("Grid saved successfully to %s\n", file_name);
+    sleep(5);
     return 0;
 }
 
@@ -207,6 +209,7 @@ int main() {
     int grid[row][col];
     int neighbor_counts[row][col];
 
+    //Randomly initialize Grid or read out a file
     int choice;
     printf("Choose to read file or use random grid(0/1):\n");
     fflush(stdin);
@@ -219,20 +222,25 @@ int main() {
         exit(1);
     }
     system(SysClr);
+    //main-game procedure. Refreshcycle implementation
     for(int i = 0; i < generations; i++) {
         printGrid(grid);
         count_live_neighbour_cells(grid, neighbor_counts);
+        //Option to save file or exit programm
+        if(i == generations-1){
+            printf("Choose to save file or exit(0/1):\n");
+            fflush(stdin);
+            scanf("%d", &choice);
+            if(choice == 0){
+                save_file(grid);
+            }else{
+                system(SysClr);
+                exit(1);
+            }
+        }
+        //refreshTime in ms
         usleep(refreshTime*100000);
         system(SysClr);
-    }
-
-    printf("Choose to save file or exit(0/1):\n");
-    fflush(stdin);
-    scanf("%d", &choice);
-    if(choice == 0){
-        save_file(grid);
-    }else{
-        exit(1);
     }
     return 0;
 }
