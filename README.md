@@ -20,7 +20,7 @@ This project is an implementation of Conway's Game of Life on a hexagonal grid. 
 
 To compile the program, use the following command:
 
-gcc -o HGoL HGoL.c
+gcc main.c -o HGoL
 
 ## Usage
 
